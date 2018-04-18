@@ -1,5 +1,5 @@
 # guitarsite
-Group Project for CSC 337
+Group Project
 
 MVC
 
