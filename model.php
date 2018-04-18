@@ -72,7 +72,8 @@
          */
         public function getUserPurchases($userID)
         {
-            $stmt = $this->DB->prepare("SELECT * FROM purchases WHERE userID=".$userID);
+            $stmt = $this->DB->prepare("SELECT * FROM purchases WHERE userID=:userID");
+            $stmt->bindParam(':userID', $userID);
             $stmt->execute();
             $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $items;
@@ -92,7 +93,8 @@
          */
         public function createAccount($usr,$pwd)
         {
-            $stmt = $this->DB->prepare("SELECT * FROM users WHERE user='$usr'");
+            $stmt = $this->DB->prepare("SELECT * FROM users WHERE user=:usr");
+            $stmt->bindParam(":usr",$usr);
             $stmt->execute();
             $name = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -128,7 +130,8 @@
          */
         public function verifyCredentials($usr,$pwd)
         {
-            $stmt = $this->DB->prepare("SELECT * FROM users WHERE user='$usr'");
+            $stmt = $this->DB->prepare("SELECT * FROM users WHERE user=:usr");
+            $stmt->bindParam(":usr",$usr);
             $stmt->execute();
             $user = $stmt->fetch( PDO::FETCH_ASSOC );
             
@@ -164,17 +167,17 @@
     
     //Testcases down here COMMENT WHEN DONE TESTING!
     
-    /*$arr = $theDBA->getUserPurchases(1);
+   /* $arr = $theDBA->getUserPurchases(1);
     print_r($arr);
     $arr = $theDBA->getAllUsers();
     print_r($arr);
     $arr = $theDBA->getAllGuitars();
     print_r($arr);*/
     
-    /*$rt = $theDBA->createAccount("orange", "orange");
+   /* $rt = $theDBA->createAccount("orange", "orange");
     echo $rt;
     
-    rt = $theDBA->createAccount("Steve", "Steve");
+    $rt = $theDBA->createAccount("Steve", "Steve");
     echo $rt;
     
     $rt = $theDBA->verifyCredentials("Nope", "Steve");
