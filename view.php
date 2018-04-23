@@ -37,7 +37,9 @@ else
 				for(i = 0; i < array.length; i++)
 				{
 					var id = array[i]['ID'];
-					str += "<p class= item ><img class='pic' src=img/" + id + ".jpg><br>";
+					str += "<p class= item ><img onclick='getGuitar("
+					str += id;
+					str +=	")'class='pic' src=img/" + id + ".jpg><br>";
 					str += array[i]['brand'] + " " + array[i]['name'] + "<br><br>";
 					str += "$" + array[i]['price'];
 					str += "</p>";
@@ -45,6 +47,11 @@ else
 				merch.innerHTML = str;
 			}
 		}
+	}
+
+	function getGuitar(id)
+	{
+		window.location.href = "guitarpage.php?id=" + id;
 	}
 </script>
 
