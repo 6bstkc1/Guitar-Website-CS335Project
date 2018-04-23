@@ -35,3 +35,32 @@ img.pic
 	width: 250px;
 	height: 250px;
 }
+
+img.buy
+{
+	border: 5px teal outset;
+	border-radius: 20px;
+	width: 500px;
+	height: 500px;
+	margin:	 10px;
+}
+
+div.con
+{
+	border: 10px #AAAAAA inset;
+	background-color: aqua;	
+	font-family: arial;
+	font-size: 2em;
+	color: blue;
+	text-align: center;
+}
+
+button.buy
+{
+	background-color: black;
+	color: white;
+	font-size: 2em;
+	font-family: impact;
+	padding: 10px;
+	margin: 10px;
+}
