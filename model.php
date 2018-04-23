@@ -158,6 +158,15 @@
             return $count->rowCount();
         }
         
+        public function getGuitarById($id)
+        {
+            $stmt = $this->DB->prepare("SELECT * FROM guitars WHERE id=:id");
+            $stmt->bindParam(":id",$id);
+            $stmt->execute();
+            $guitar = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            return $guitar;
+        }
+        
         /*TODO: Add more functions here*/
         
     } // end of DataBaseAdapter
@@ -165,13 +174,16 @@
     //The Object
     $theDBA = new DatabaseAdapter();
     
+    //$arr = $theDBA->getGuitarById(1);
+    //print_r($arr);
+    
     //Testcases down here COMMENT WHEN DONE TESTING!
     
    /* $arr = $theDBA->getUserPurchases(1);
     print_r($arr);
     $arr = $theDBA->getAllUsers();
-    print_r($arr);
-    $arr = $theDBA->getAllGuitars();
+    print_r($arr);*/
+   /* $arr = $theDBA->getAllGuitars();
     print_r($arr);*/
     
    /* $rt = $theDBA->createAccount("orange", "orange");
