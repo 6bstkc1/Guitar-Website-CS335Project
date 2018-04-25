@@ -9,23 +9,28 @@ session_start();
 </head>
 <body onload="getGuitars()">
 	<h1>Guitar Site</h1>
-	<button>Register</button>
-	<button>Login</button>
 <?php
 if (isset($_SESSION['user']))
     echo "<hr>";
 else
-    echo "<h3>Account needed to purhase guitars!</h3>";
+    echo "
+    <button class='acc' onclick='login()'>Login</button>
+    <button class='acc' onclick='register()'>Register</button>
+    <div class='warn'>Account needed to purchase guitars!</div>";
 ?>
 
-<div id="merch"></div>
+<div class="maincon">
+	<h1>Guitars</h1>
+	<div id="merch"></div>
+</div>
+
 
 <script>
 	function getGuitars()
 	{
 		var merch = document.getElementById("merch");
 		var ajax = new XMLHttpRequest();
-		ajax.open("GET","controller.php?mode=merch",true);
+		ajax.open("POST","controller.php?mode=merch",true);
 		ajax.send();
 		
 		ajax.onreadystatechange = function()
@@ -53,8 +58,23 @@ else
 	{
 		window.location.href = "guitarpage.php?id=" + id;
 	}
+
+	function register()
+	{
+		window.location.href = "register.php";
+	}
+	function login()
+	{
+		window.location.href = "login.php";
+	}
 </script>
 
+<?php
+if (isset($_SESSION['user']))
+    echo "<hr>";
+else
+    echo "<div class='warn'>Account needed to purchase guitars!</div ><br>";
+?>
 
 </body>
 </html>
