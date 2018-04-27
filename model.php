@@ -58,28 +58,6 @@
         }
         
         /*
-         *  Returns all of the items in the user's purchases by their id
-         *  Note: can have mutiple userIDs!
-         *  
-         *  carts
-         *  userID | ItemID  | Amount
-         *  
-         *  @params:
-         *      $userID: the id of the user
-         *      
-         *  @returns:
-         *      the items in the user's cart
-         */
-        public function getUserPurchases($userID)
-        {
-            $stmt = $this->DB->prepare("SELECT * FROM purchases WHERE userID=:userID");
-            $stmt->bindParam(':userID', $userID);
-            $stmt->execute();
-            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $items;
-        }
-        
-        /*
          *  This function creates a new user, it checks if the user already exists, if so,
          *  it fails, otherwise it hashes the user's password then adds the data to the database
          *
@@ -107,6 +85,8 @@
                     $hash = password_hash($pwd,PASSWORD_DEFAULT); // hash the password
                     $insert = $this->DB->prepare("INSERT INTO users VALUES ('$id','$usr','$hash')"); // Store
                     $insert->execute();
+                    session_start();
+                    $_SESSION['user'] = $usr;
                     return 1;
                 }
         }
@@ -126,7 +106,6 @@
          *      1 on username not existing
          *      2 on incorrect password
          *
-         *      works
          */
         public function verifyCredentials($usr,$pwd)
         {
@@ -140,7 +119,11 @@
             else if(!password_verify($pwd, $user['hash'])) //passwords don't match
                return 2;
             else
+            {
+               session_start();
+               $_SESSION['user'] = $usr;
                return 0;
+            }
         }
         
         /*
@@ -158,6 +141,10 @@
             return $count->rowCount();
         }
         
+        /*
+         *  Gets a guitar by the product ID
+         *  
+         */
         public function getGuitarById($id)
         {
             $stmt = $this->DB->prepare("SELECT * FROM guitars WHERE id=:id");
@@ -166,6 +153,81 @@
             $guitar = $stmt->fetchALL(PDO::FETCH_ASSOC);
             return $guitar;
         }
+       
+        /*
+         *  Adds an item to the user's cart
+         *  
+         *  params:
+         *      $user: the name of the user
+         *      $prodID: the id of the product
+         */
+        public function addToCart($usr,$prodID)
+        {
+            $userID = $this->usernameToID($usr);
+            echo $prodID;
+            $stmt = $this->DB->prepare("INSERT INTO purchases VALUES($userID,:prodID)");
+            $stmt->bindParam(":prodID", $prodID, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+        
+        
+        /*
+         *  Gets all of the items in a user's cart
+         *  This function uses a JOIN
+         *  
+         *  @params
+         *      $usr: the name of the user
+         *      
+         * @returns: a 2d array of items
+         * 
+         */
+        public function getPurchases($usr)
+        {
+            $id = $this->usernameToID($usr);
+            $stmt = $this->DB->prepare("SELECT guitars.brand, guitars.name, guitars.price 
+                                        FROM purchases 
+                                        JOIN guitars ON purchases.itemID = guitars.ID 
+                                        WHERE purchases.userID=".$id);
+            $stmt->execute();
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $items;
+        }
+        
+        /*
+         *  Empties all the items from the cart of a user
+         *  
+         *  @params
+         *      $usr: the name of the user
+         *      
+         *  @returns: void
+         */
+        public function emptyCart($usr)
+        {
+            $userID = $this->usernameToID($usr);
+            $stmt = $this->DB->prepare("DELETE FROM purchases WHERE userID=$userID");
+            $stmt->execute();
+        }
+        
+        /*
+         *  Takes a username returns the ID
+         *  Called by addToCart and emptyCart
+         *  
+         *  @params
+         *      $usr: the name of the user
+         *  
+         *  @returns: the user's id
+         *    
+         */
+        public function usernameToID($usr)
+        {
+            $stmt = $this->DB->prepare("SELECT ID FROM users WHERE user=:usr"); // Get the id
+            $stmt->bindParam(":usr",$usr);
+            $stmt->execute();
+            $userID = $stmt->fetch(PDO::FETCH_ASSOC); // got the id
+            $userID = $userID['ID'];
+            return $userID;
+        }
+        
         
         /*TODO: Add more functions here*/
         
@@ -173,6 +235,13 @@
     
     //The Object
     $theDBA = new DatabaseAdapter();
+    
+    //$theDBA->getPurchases("Sean");
+    
+    //$theDBA->addToCart("Sean",1);
+    //$theDBA->addToCart("red",3);
+    
+    //$theDBA->emptyCart("Sean");
     
     //$arr = $theDBA->getGuitarById(1);
     //print_r($arr);
@@ -199,5 +268,7 @@
     $rt = $theDBA->verifyCredentials("orange", "orange");
     echo $rt;*/
     
+   // $theDBA->getPurchases("Steve");
     
+    //$theDBA->emptyCart("Sean");
  ?>
