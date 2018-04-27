@@ -16,28 +16,28 @@ h1
 
 button.acc
 {
-	font-size: 2em;
+	font-size: 1em;
 	font-family: Courier;
 	border: outset;
 	background-color: orange;
 	margin: 10px;
-	padding: 10px;
+	padding: 15px;
 }
 
 .item
 {
 	float: left;
 	border: 5px black outset;
-	background-color: purple;
+	background-color: #EEEEEE;
 	border-radius: 20px;
-	font-family: Arial;
+	font-family: Courier;
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
-	color: red;
+	color: black;
 	margin: 5px;
 	padding: 5px;
-	width: 250px;
+	width: 300px;
 }
 
 img.pic
@@ -49,36 +49,11 @@ img.pic
 
 img.buy
 {
-	border: 5px teal outset;
-	border-radius: 20px;
+	border: 10px inset;
 	width: 500px;
 	height: 500px;
 }
 
-div.con
-{
-	border: 10px #AAAAAA inset;
-	background-color: purple;	
-	font-family: arial;
-	font-size: 2em;
-	color: red;
-	text-align: center;
-	margin-top: 50px;
-	margin-bottom: 100px;
-	margin-left: 100px;
-	margin-right: 100px;
-	padding: 100px;
-}
-
-button.buy
-{
-	background-color: black;
-	color: white;
-	font-size: 2em;
-	font-family: impact;
-	padding: 20px;
-	margin: 10px;
-}
 
 div.warn
 {
@@ -92,10 +67,57 @@ div.warn
 
 div.maincon
 {
-	border: 10px #AAAAAA outset;
-	background-color: aqua;
+	font-family: courier;
+	font-size: 2em;
+	border: 10px white outset;
+	background-color: gray;
 	padding: 50px;
 	margin: 50px;
 	height: 1000px;
 }
 
+div.itemcon
+{
+	text-align: center;
+	font-family: courier;
+	font-size: 2em;
+	border: 10px white outset;
+	background-color: gray;
+	padding: 50px;
+	margin: 50px;
+	height: 1000px;
+}
+
+div.welcome
+{
+	font-size: 2em;
+	font-family: courier;
+	text-align: center;
+	color: white;
+}
+
+p
+{
+	color: white;
+}
+
+#errorBox
+{
+	color: white;
+}
+
+div#cart
+{
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 10px white outset;
+	color: white;
+	text-align: center;
+	font-size: 2em;
+	font-family: Courier;
+	
+	text-align: center;	
+}
