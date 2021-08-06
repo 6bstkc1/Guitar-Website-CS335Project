@@ -1,5 +1,6 @@
 # guitarsite
-Group Project
+Group Project for CSC 335
+A Fictional Guitar Purchasing Site
 
 MVC
 
